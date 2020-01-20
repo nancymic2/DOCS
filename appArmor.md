@@ -21,7 +21,7 @@ In this implementation it is designed to mitigate three threat scenarios:
     
 The AppArmor profiles here:
 * Use the sVirt mechanism to deliver a very locked down profile for KVM / QEMU processes that guests run under. This enforces strict isolation of the guest VMs, which is significantly more useful than just securing libvirt.
-* Contains important improvements over stock Debian profiles, including:
+* Contain important improvements over stock Debian profiles, including:
     * Preventing libvirt from writing to any system config.
     * Preventing Libivirt from accessing any hardware and device nodes that are not required for Helion-based solutions. While
     the stock AppArmor profiles are more permissive, as libvirt supports a larger set of functionality than is exposed via 
