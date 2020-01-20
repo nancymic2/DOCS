@@ -11,16 +11,21 @@ AppArmor also lets you tie a process to a CPU core if you want, and set process 
 AppArmor profiles are loaded into the kernel, typically on boot. They can run in either enforcement or complain modes. In enforcement mode, the policy is enforced and policy violation attempts are reported. In complain mode, policy violation attempts are reported but not prevented.
 
 ## AppArmor in HPE Helion OpenStack 3.0
-AppArmor in HPE Helion OpenStack 3.0 is installed and enabled on the KVM compute nodes by default. It runs in enforce mode. It enforces mandatory access control policies for the libvirt process. Customers can run 'systemctl status apparmor' command on the compute nodes to check that the service is active.
+AppArmor in HPE Helion OpenStack 3.0 is installed and enabled on the KVM compute nodes by default. It runs in enforce mode. It 
+enforces mandatory access control policies for the libvirt process. Customers can run 'systemctl status apparmor' command on the 
+compute nodes to check that the service is active.
 In this implementation it is designed to mitigate three threat scenarios:
 * Hypervisor breakout followed by compromise of hosting qemu/kvm process.
     * Malicious manipulation of qemu APIs via Nova compute.
     * Malicious manipulation of libvirt APIs via Nova compute.
+    
 The AppArmor profiles here:
 * Use the sVirt mechanism to deliver a very locked down profile for KVM / QEMU processes that guests run under. This enforces strict isolation of the guest VMs, which is significantly more useful than just securing libvirt.
-* Contains important improvements over stock Debian profiles: including
+* Contains important improvements over stock Debian profiles, including:
     * Preventing libvirt from writing to any system config.
-    * Preventing Libivirt from accessing any hardware and device nodes that are not required for Helion-based solutions. While the stock AppArmor profiles are more permissive, as libvirt supports a larger set of functionality than is exposed via Nova compute, the profiles included here only allow access to features exposed through Nova.
+    * Preventing Libivirt from accessing any hardware and device nodes that are not required for Helion-based solutions. While
+    the stock AppArmor profiles are more permissive, as libvirt supports a larger set of functionality than is exposed via 
+    Nova compute, the profiles included here only allow access to features exposed through Nova.
 
 _The OpenStack® Word Mark and OpenStack Logo are either registered trademarks/service marks or trademarks/service marks of the OpenStack Foundation in the United States and other countries and are used with the OpenStack Foundation's permission. We are not affiliated with, endorsed or sponsored by the OpenStack Foundation or the OpenStack community._
 
